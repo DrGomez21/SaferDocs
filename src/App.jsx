@@ -1,13 +1,13 @@
-import {Logo} from './components/Logo.jsx'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Home } from './pages/Home.jsx'
 
 function App() {
-
   return (
-    <>
-      <header className='w-full flex justify-center p-6'>
-        <Logo />
-      </header>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
