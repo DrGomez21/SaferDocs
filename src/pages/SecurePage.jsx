@@ -3,6 +3,8 @@ import { useLocation, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Logo } from "../components/Logo";
 import { Explicacion } from "../components/Explicacion";
+import QRCode from "qrcode";
+import { SHA256 } from "crypto-js";
 
 export const SecurePage = () => {
 
@@ -17,15 +19,42 @@ export const SecurePage = () => {
     return <Navigate to="/" replace />
   }
 
-  const onSubmit = (data) => {
+  const generateQRCodeData = async (imageHash, data) => {
+    console.log("Generating QR code with data:", data);
+    const qrData = {
+      textoMarcaAgua: data.textoMarcaAgua,
+      duracion: data.duracion,
+      fechaCreacion: new Date().toISOString(),
+      imageHash: imageHash,
+    }
+
+    try {
+      const qrCodeDataUrl = await QRCode.toDataURL(JSON.stringify(qrData))
+      console.log("QR code data URL:", qrCodeDataUrl);
+      return qrCodeDataUrl
+    } catch (error) {
+      console.log("Error generating QR code:", error)
+      return null
+    }
+  }
+
+  const onSubmit = async (data) => {
     setLoading(true);
     const canvas = document.createElement("canvas");
     const img = new window.Image();
     img.crossOrigin = "anonymous";
-    img.onload = () => {
+
+    img.onload = async () => {
+      // Generar el hash de la imagen
+      const imageHash = SHA256(img.src).toString();
+      // Generar el código QR
+      const qrCodeDataUrl = await generateQRCodeData(imageHash, data);
+
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext("2d");
+
+      // Dibuja la imagen original en el canvas
       ctx.drawImage(img, 0, 0);
 
       // Configura el texto de la marca de agua
@@ -34,13 +63,6 @@ export const SecurePage = () => {
       ctx.fillStyle = "rgba(0,0,0,0.5)";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-
-      // Escribe la marca de agua en el centro
-      // const watermarks = [
-      //   { x: img.width / 2, y: img.height / 4, rotation: -Math.PI / 6 },
-      //   { x: img.width / 2, y: img.height / 2, rotation: 0 },
-      //   { x: img.width / 2, y: (img.height / 4) * 3, rotation: Math.PI / 6 },
-      // ];
 
       // Define las 4 marcas de agua apiladas con diferentes rotaciones
       const watermarks = [
@@ -59,9 +81,26 @@ export const SecurePage = () => {
         ctx.restore();
       });
 
-      // Guardar la imagen en el estado
-      setWatermarkedImage(canvas.toDataURL("image/png"));
-      setLoading(false);
+      // Agregar el código QR a la imagen
+      if (qrCodeDataUrl) {
+        const qrImage = new Image();
+        qrImage.onload = () => {
+          const qrSize = Math.floor(img.width / 8)
+          const padding = 20
+          ctx.drawImage(
+            qrImage,
+            img.width - qrSize - padding,
+            img.height - qrSize - padding,
+            qrSize,
+            qrSize
+          )
+
+          // Guardar la imagen en el estado
+          setWatermarkedImage(canvas.toDataURL("image/png"));
+          setLoading(false);
+        }
+        qrImage.src = qrCodeDataUrl
+      }
     };
     img.src = image;
   }
