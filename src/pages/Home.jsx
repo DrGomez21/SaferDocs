@@ -10,7 +10,7 @@ export const Home = () => {
         <Logo />
       </header>
 
-      <main className="flex flex-col justify-center items-center gap-4 px-6">
+      <main className="flex flex-col justify-center items-center gap-4 px-6 max-w-5xl mx-auto">
         <section className="flex flex-col items-center gap-6">
           <p className="text-center text-2xl font-poppins">Protege tus 💳 <span className="font-semibold">documentos</span> de manera <span className="font-source-serif italic">fácil</span> y <span className="font-source-serif italic">segura</span></p>
 
@@ -18,7 +18,7 @@ export const Home = () => {
 
           <input type="file" accept="image/*" className="hidden" id="imageInput" />
           <button
-            className="flex justify-center items-center gap-2 w-full bg-primary text-white font-poppins font-semibold text-sm px-4 py-3 rounded-lg"
+            className="flex justify-center items-center gap-2 w-full bg-primary text-white font-poppins font-semibold text-sm px-4 py-3 rounded-lg max-w-xl"
             onClick={() => document.getElementById('imageInput').click()}
           >
             <img src={addFile} />Elige una imagen
