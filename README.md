@@ -6,6 +6,7 @@ Trabajo práctico para la materia Arquitectura Web
 Este proyecto es una aplicación desarrollada en javascript, con el framework React.
 
 ## Instrucciones para clonar el proyecto
+🛑 Se necesita tener instalado Node.js para ejecutar el proyecto. [Ir a Node](https://nodejs.org/en/download)
 1. Abre una terminal.
 2. Navega al directorio donde deseas clonar el repositorio.
 3. Ejecuta el siguiente comando:
@@ -16,9 +17,14 @@ Este proyecto es una aplicación desarrollada en javascript, con el framework Re
    ```bash
    cd saferDocs
    ```
-5. Sigue las instrucciones adicionales de instalación y configuración que se encuentran en el archivo `README.md`.
-
-
+5. Instalar las dependencias:
+   ```bash
+   npm install
+   ```
+6. Ejecutar el proyecto:
+   ```bash
+   npm run dev
+   ```
 ---
 
 Diseño: [Enlace a Figma](https://www.figma.com/design/FC1ThixtsijlffkWXCmnCL/cifra-documentos?node-id=0-1&t=mnt1AKTmQUGOiRdE-1)
