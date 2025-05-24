@@ -1,29 +1,23 @@
 # SaferDocs
 Trabajo práctico para la materia Arquitectura Web
 
-/**
- * # Proyecto
- *
- * Este proyecto es una aplicación desarrollada en javascript, con el framework React.
- *
- * ## Instrucciones para clonar el proyecto
- *
- * 1. Abre una terminal.
- * 2. Navega al directorio donde deseas clonar el repositorio.
- * 3. Ejecuta el siguiente comando:
- *
- *    ```bash
- *    git clone https://github.com/DrGomez21/SaferDocs.git
- *    ```
- *
- * 4. Ingresa al directorio del proyecto:
- *
- *    ```bash
- *    cd saferDocs
- *    ```
- *
- * 5. Sigue las instrucciones adicionales de instalación y configuración que se encuentran en el archivo `README.md`.
- */
+
+# Proyecto
+Este proyecto es una aplicación desarrollada en javascript, con el framework React.
+
+## Instrucciones para clonar el proyecto
+1. Abre una terminal.
+2. Navega al directorio donde deseas clonar el repositorio.
+3. Ejecuta el siguiente comando:
+   ```bash
+   git clone https://github.com/DrGomez21/SaferDocs.git
+   ```
+4. Ingresa al directorio del proyecto:
+   ```bash
+   cd saferDocs
+   ```
+5. Sigue las instrucciones adicionales de instalación y configuración que se encuentran en el archivo `README.md`.
+
 
 ---
 
