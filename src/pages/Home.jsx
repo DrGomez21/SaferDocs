@@ -1,9 +1,23 @@
+import { useNavigate } from "react-router-dom"
 import { Logo } from "../components/Logo"
 import addFile from "../assets/addFile.svg"
 import pcSecure from "../assets/pc-secure.svg"
 import qrCode from "../assets/qr.png"
 
 export const Home = () => {
+
+  const navigate = useNavigate()
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      const imageUrl = URL.createObjectURL(file)
+      navigate('/app', {state: { image: imageUrl }})
+    } else {
+      console.error("No file selected")
+    }
+  }
+
   return (
     <>
       <header className='w-full flex justify-center p-6'>
@@ -16,7 +30,7 @@ export const Home = () => {
 
           <div className="absolute -z-30 bg-blue-300 w-36 h-36 rounded-full blur-2xl" />
 
-          <input type="file" accept="image/*" className="hidden" id="imageInput" />
+          <input type="file" accept="image/*" className="hidden" id="imageInput" onChange={handleFileChange} />
           <button
             className="flex justify-center items-center gap-2 w-full bg-primary text-white font-poppins font-semibold text-sm px-4 py-3 rounded-lg max-w-xl"
             onClick={() => document.getElementById('imageInput').click()}
