@@ -32,7 +32,7 @@ export const Home = () => {
 
           <input type="file" accept="image/*" className="hidden" id="imageInput" onChange={handleFileChange} />
           <button
-            className="flex justify-center items-center gap-2 w-full bg-primary text-white font-poppins font-semibold text-sm px-4 py-3 rounded-lg max-w-xl"
+            className="flex justify-center items-center gap-2 w-full bg-primary text-white font-poppins font-semibold text-sm px-4 py-3 rounded-lg max-w-xl hover:cursor-pointer sm:hover:scale-110 transition duration-100"
             onClick={() => document.getElementById('imageInput').click()}
           >
             <img src={addFile} />Elige una imagen
