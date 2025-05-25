@@ -7,6 +7,7 @@ import { SHA256 } from "crypto-js";
 import { aplicarMarcaDeAgua } from "../services/watermarkService";
 import { generateQRCodeData } from "../services/qrService";
 import { Fomulario } from "../components/Formulario";
+import downloadIcon from "../assets/download.svg";
 
 export const SecurePage = () => {
 
@@ -77,7 +78,7 @@ export const SecurePage = () => {
         <button
           type="button"
           onClick={() => window.history.back()}
-          className="flex items-center gap-2 text-primary hover:underline font-poppins"
+          className="flex items-center gap-2 text-primary hover:underline font-poppins hover:cursor-pointer"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -96,7 +97,7 @@ export const SecurePage = () => {
         <Explicacion />
         {/* Mostrar la imagen procesada si existe */}
         {watermarkedImage && (
-          <div ref={resultRef} className="mt-8 w-full max-w-2xl">
+          <div ref={resultRef} className="mt-8 w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-lg font-poppins font-medium mb-4">Documento Protegido:</h3>
             <img
               src={watermarkedImage}
@@ -106,9 +107,9 @@ export const SecurePage = () => {
             <a
               href={watermarkedImage}
               download="documento_protegido.png"
-              className="mt-4 inline-block bg-primary text-white px-4 py-2 rounded-lg font-poppins"
+              className="mt-4 text-center items-center flex gap-2 bg-primary text-white px-4 py-2 rounded-lg font-poppins font-semibold hover:scale-95 transition duration-100"
             >
-              Descargar imagen
+              <img src={downloadIcon} /> Descargar imagen
             </a>
           </div>
         )}
