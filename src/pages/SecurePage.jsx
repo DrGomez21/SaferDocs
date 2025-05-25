@@ -3,8 +3,10 @@ import { useLocation, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Logo } from "../components/Logo";
 import { Explicacion } from "../components/Explicacion";
-import QRCode from "qrcode";
 import { SHA256 } from "crypto-js";
+import { aplicarMarcaDeAgua } from "../services/watermarkService";
+import { generateQRCodeData } from "../services/qrService";
+import { Fomulario } from "../components/Formulario";
 
 export const SecurePage = () => {
 
@@ -15,28 +17,8 @@ export const SecurePage = () => {
 
   const location = useLocation()
   const { image } = location.state || {}
-  if (!image) {
-    return <Navigate to="/" replace />
-  }
 
-  const generateQRCodeData = async (imageHash, data) => {
-    console.log("Generating QR code with data:", data);
-    const qrData = {
-      textoMarcaAgua: data.textoMarcaAgua,
-      duracion: data.duracion,
-      fechaCreacion: new Date().toISOString(),
-      imageHash: imageHash,
-    }
-
-    try {
-      const qrCodeDataUrl = await QRCode.toDataURL(JSON.stringify(qrData))
-      console.log("QR code data URL:", qrCodeDataUrl);
-      return qrCodeDataUrl
-    } catch (error) {
-      console.log("Error generating QR code:", error)
-      return null
-    }
-  }
+  if (!image) return <Navigate to="/" replace />
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -47,39 +29,14 @@ export const SecurePage = () => {
     img.onload = async () => {
       // Generar el hash de la imagen
       const imageHash = SHA256(img.src).toString();
-      // Generar el código QR
-      const qrCodeDataUrl = await generateQRCodeData(imageHash, data);
+      const qrCodeDataUrl = await generateQRCodeData(imageHash, data); // Generar el código QR
 
       canvas.width = img.width;
       canvas.height = img.height;
       const ctx = canvas.getContext("2d");
 
-      // Dibuja la imagen original en el canvas
-      ctx.drawImage(img, 0, 0);
-
-      // Configura el texto de la marca de agua
-      const fontSize = Math.floor(img.width / 15);
-      ctx.font = `${fontSize}px Impact`;
-      ctx.fillStyle = "rgba(0,0,0,0.5)";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      // Define las 4 marcas de agua apiladas con diferentes rotaciones
-      const watermarks = [
-        { x: img.width / 2, y: img.height / 2, rotation: 0 },
-        { x: img.width / 2, y: img.height / 4, rotation:0 },    // 30 grados
-        { x: img.width / 2, y: img.height / 6, rotation: 0 },   // -30 grados
-        { x: img.width / 2, y: img.height / -4, rotation: 0 },    // 60 grados
-        { x: img.width / 2, y: img.height / 3, rotation: 0 },    // 60 grados
-      ];
-
-      watermarks.forEach(mark => {
-        ctx.save();
-        ctx.translate(mark.x, mark.y);
-        ctx.rotate(mark.rotation);
-        ctx.fillText(data.textoMarcaAgua, 0, 0);
-        ctx.restore();
-      });
+      ctx.drawImage(img, 0, 0); // Dibuja la imagen original en el canvas
+      aplicarMarcaDeAgua(ctx, data.textoMarcaAgua, img.width, img.height); // Aplica la marca de agua
 
       // Agregar el código QR a la imagen
       if (qrCodeDataUrl) {
@@ -130,48 +87,7 @@ export const SecurePage = () => {
       </nav>
       <main className="flex flex-col justify-center items-center gap-4 px-6 max-w-5xl mx-auto mb-6">
         <img src={image} alt="Imagen seleccionada" className="w-sm h-auto" />
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col w-full max-w-md mx-auto bg-white p-4 rounded"
-        >
-          <label className="font-poppins font-medium" htmlFor="textoMarcaAgua">
-            Fin de uso
-            <input
-              id="textoMarcaAgua"
-              type="text"
-              placeholder="Texto acá"
-              className="w-full rounded-lg border border-gray-300 p-3 font-poppins"
-              {...register("textoMarcaAgua", { required: true })}
-            />
-          </label>
-          {errors.textoMarcaAgua && (
-            <span className="text-red-500 text-sm">Este campo es obligatorio</span>
-          )}
-
-          <label className="font-poppins font-medium mt-4" htmlFor="duracion">
-            Validez
-            <select
-              id="duracion"
-              className="w-full rounded-lg border border-gray-300 p-3 font-poppins"
-              {...register("duracion", { required: true })}
-            >
-              <option value="">Selecciona duración</option>
-              <option value="siempre">Por siempre</option>
-              <option value="1semana">1 semana</option>
-              <option value="1mes">1 mes</option>
-              <option value="1año">1 año</option>
-            </select>
-          </label>
-          {errors.duracion && (
-            <span className="text-red-500 text-sm">Este campo es obligatorio</span>
-          )}
-
-          <input
-            type="submit"
-            value="Proteger documento"
-            className="w-full rounded-lg mt-6 bg-primary text-white p-3 font-poppins font-semibold cursor-pointer hover:bg-blue-600 transition-colors duration-300"
-          />
-        </form>
+        <Fomulario onSubmit={onSubmit} />
         {loading && (
           <div className="flex items-center justify-center mt-4">
             <p>Estamos procesando la imagen</p>
