@@ -7,7 +7,7 @@ export const Fomulario = ({ onSubmit, loading }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-full max-w-md mx-auto bg-white p-4 rounded"
+      className="flex flex-col w-full max-w-md mx-auto bg-white p-4 rounded shadow-lg"
     >
       <label className="font-poppins font-medium" htmlFor="textoMarcaAgua">
         Fin de uso
@@ -44,7 +44,7 @@ export const Fomulario = ({ onSubmit, loading }) => {
       <input
         type="submit"
         value="Proteger documento"
-        className="w-full rounded-lg mt-6 bg-primary text-white p-3 font-poppins font-semibold cursor-pointer hover:bg-blue-600 transition-colors duration-300"
+        className="w-full rounded-lg mt-6 bg-primary text-white p-3 font-poppins font-semibold cursor-pointer hover:cursor-pointer hover:scale-95 transition duration-100"
       />
     </form>
   )
