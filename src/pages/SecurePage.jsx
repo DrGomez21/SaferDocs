@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { Logo } from "../components/Logo";
 import { Explicacion } from "../components/Explicacion";
 import { SHA256 } from "crypto-js";
 import { aplicarMarcaDeAgua } from "../services/watermarkService";
-import { generateQRCodeData } from "../services/qrService";
+import { generateQRCodeData, generateQRCodeAPI } from "../services/qrService";
 import { Fomulario } from "../components/Formulario";
 import downloadIcon from "../assets/download.svg";
 
@@ -14,7 +13,6 @@ export const SecurePage = () => {
   const [watermarkedImage, setWatermarkedImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const resultRef = useRef(null);
-  const { register, handleSubmit, formState: { errors } } = useForm()
 
   const location = useLocation()
   const { image } = location.state || {}
@@ -30,7 +28,7 @@ export const SecurePage = () => {
     img.onload = async () => {
       // Generar el hash de la imagen
       const imageHash = SHA256(img.src).toString();
-      const qrCodeDataUrl = await generateQRCodeData(imageHash, data); // Generar el código QR
+      const qrCodeDataUrl = await generateQRCodeAPI(imageHash, data); // Generar el código QR
 
       canvas.width = img.width;
       canvas.height = img.height;
