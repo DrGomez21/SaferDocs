@@ -22,3 +22,25 @@ export const aplicarMarcaDeAgua = (ctx, text, width, height) => {
     ctx.restore();
   });
 }
+
+export const aplicarMarcaDeAguaAPI = async (width, height, text) => {
+  try {
+    const response = await fetch('http://localhost:3000/apply-watermark', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ width, height, text }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al obtener la imagen con marca de agua');
+    }
+
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+
+    return imageUrl;
+  } catch (error) {
+    console.error('Error aplicando la marca de agua:', error);
+    return null;
+  }
+};
