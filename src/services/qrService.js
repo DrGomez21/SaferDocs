@@ -18,7 +18,8 @@ export const generateQRCodeData = async (imageHash, data) => {
 
 export const generateQRCodeAPI = async (imageHash, data) => {
   try {
-    const response = await fetch('http://localhost:3000/generate-qr', {
+    const apiUrl = `${import.meta.env.VITE_API_SERVER_BASE_URL}/generate-qr`;
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ imageHash, data }),
