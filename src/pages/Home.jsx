@@ -26,7 +26,7 @@ export const Home = () => {
 
       <main className="flex flex-col justify-center items-center gap-4 px-6 max-w-5xl mx-auto">
         <section className="flex flex-col items-center gap-6">
-          <p className="text-center text-2xl font-poppins">Protege tus 💳 <span className="font-semibold">documentos</span> de manera <span className="font-source-serif italic">fácil</span> y <span className="font-source-serif italic">segura</span></p>
+          <p className="text-center text-2xl font-poppins md:text-7xl md:mt-2 md:mb-6">Protege tus 💳 <span className="font-semibold">documentos</span> de manera <span className="font-source-serif italic">fácil</span> y <span className="font-source-serif italic">segura</span></p>
 
           <div className="absolute -z-30 bg-blue-300 w-36 h-36 rounded-full blur-2xl" />
 
@@ -38,7 +38,7 @@ export const Home = () => {
             <img src={addFile} />Elige una imagen
           </button>
 
-          <p className="font-poppins text-sm">
+          <p className="font-poppins text-sm text-center">
             Con solo unos clics, podrás cifrar tus documentos con una marca de agua, con el fin de evitar estafas por suplantación de identidad, ayudando a garantizar que tus documentos no sean alterados ni utilizados de forma fraudulenta.
           </p>
         </section>

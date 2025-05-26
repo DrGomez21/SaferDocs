@@ -97,8 +97,8 @@ export const SecurePage = () => {
         <Explicacion />
         {/* Mostrar la imagen procesada si existe */}
         {watermarkedImage && (
-          <div ref={resultRef} className="mt-8 w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-lg font-poppins font-medium mb-4">Documento Protegido:</h3>
+          <div ref={resultRef} className="mt-8 w-full max-w-2xl bg-white p-6 rounded-lg shadow-lg flex flex-col justify-center items-center">
+            <h3 className="text-lg font-poppins font-medium mb-4">Documento Protegido</h3>
             <img
               src={watermarkedImage}
               alt="Documento con marca de agua"
@@ -107,9 +107,9 @@ export const SecurePage = () => {
             <a
               href={watermarkedImage}
               download="documento_protegido.png"
-              className="mt-4 text-center items-center flex gap-2 bg-primary text-white px-4 py-2 rounded-lg font-poppins font-semibold hover:scale-95 transition duration-100"
+              className="mt-4 text-center items-center flex gap-2 bg-primary text-white px-4 py-2 rounded-lg font-poppins font-semibold hover:scale-95 transition duration-100 w-full justify-center"
             >
-              <img src={downloadIcon} /> Descargar imagen
+              <img src={downloadIcon}/> Descargar imagen
             </a>
           </div>
         )}
