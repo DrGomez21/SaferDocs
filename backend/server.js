@@ -13,18 +13,26 @@ app.use(cors());
 // Función para generar QR code (adaptada de la tuya)
 app.post("/generate-qr", async (req, res) => {
   const { imageHash, data } = req.body;
+
+  // Validar que se envíen los datos necesarios.
+  if (!imageHash || !data) {
+    return res.status(400).json({ error: 'Faltan parámetros imageHash o data' });
+  }
+
   const qrData = {
     textoMarcaAgua: data.textoMarcaAgua,
     duracion: data.duracion,
     fechaCreacion: new Date().toISOString(),
     imageHash: imageHash,
+    app: "Protegido con SafeDocs",
   };
+
   try {
     const qrCodeDataUrl = await QRCode.toDataURL(JSON.stringify(qrData));
     res.json({ qrCodeDataUrl });
   } catch (error) {
-    console.error("Error generating QR code:", error);
-    res.status(500).json({ error: "Failed to generate QR code" });
+    console.error("Error al generar el código QR:", error);
+    res.status(500).json({ error: "No pudimos generar el código QR. Vuelve a intentarlo, por favor." });
   }
 });
 
