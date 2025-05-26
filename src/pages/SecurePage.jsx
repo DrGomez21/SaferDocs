@@ -28,7 +28,7 @@ export const SecurePage = () => {
     img.onload = async () => {
       // Generar el hash de la imagen
       const imageHash = SHA256(img.src).toString();
-      const qrCodeDataUrl = await generateQRCodeAPI(imageHash, data); // Generar el código QR
+      const qrCodeDataUrl = await generateQRCodeData(imageHash, data); // Generar el código QR
 
       canvas.width = img.width;
       canvas.height = img.height;
