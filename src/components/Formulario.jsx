@@ -14,7 +14,7 @@ export const Fomulario = ({ onSubmit, loading }) => {
         <input
           id="textoMarcaAgua"
           type="text"
-          placeholder="Texto acá"
+          placeholder="Ej. válido trámite académico"
           className="w-full rounded-lg border border-gray-300 p-3 font-poppins"
           {...register("textoMarcaAgua", { required: true })}
         />
