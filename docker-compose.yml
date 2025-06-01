@@ -10,3 +10,10 @@ services:
       - ./backend:/app
       - /app/node_modules
     restart: always
+
+  frontend:
+    build:
+      context: .
+    ports:
+      - "3000:80"
+    restart: always
