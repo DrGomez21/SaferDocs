@@ -17,13 +17,17 @@ Este proyecto es una aplicación desarrollada en javascript, con el framework Re
    ```bash
    cd saferDocs
    ```
-5. Instalar las dependencias:
+5. Construir las imágenes de Docker:
    ```bash
-   npm install
+   docker-compose up --build -d
    ```
-6. Ejecutar el proyecto:
+   En Caso de no iniciar automáticamente el servicio:
    ```bash
-   npm run dev
+   docker-compose up
+   ```
+6. Acceder a la aplicación:
+   ```bash
+   Frontend: http://localhost:3000/
    ```
 ---
 
